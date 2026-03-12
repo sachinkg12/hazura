@@ -26,5 +26,26 @@ export { StormEventsProvider } from './providers/storm-events.provider.js';
 export { NfipProvider } from './providers/nfip.provider.js';
 export { LandslideProvider } from './providers/landslide.provider.js';
 
+// Plan Generator
+export { PlanGenerator } from './engine/plan-generator.js';
+export type {
+  HouseholdProfile,
+  HouseholdMember,
+  Pet,
+  MedicalNeeds,
+  HousingType,
+  TransportationType,
+} from './models/household.js';
+export { totalPeople, hasInfants, hasChildren, hasElderly, hasPets } from './models/household.js';
+export type {
+  PrepPlan,
+  PrepRisk,
+  KitSection,
+  KitItem,
+  ActionPlan,
+  ActionStep,
+  MaintenanceTask,
+} from './models/plan.js';
+
 // Geocoding
 export { geocodeAddress } from './geocoding/geocoder.js';
