@@ -34,27 +34,28 @@ export function AddressInput({ value, onChange, onSubmit, disabled }: AddressInp
   }, []);
 
   const fetchSuggestions = useCallback(async (query: string) => {
-    if (query.length < 5) {
+    if (query.length < 4) {
       setSuggestions([]);
       return;
     }
 
     try {
+      // Use Nominatim (OpenStreetMap) for autocomplete — supports partial addresses and city names
       const encoded = encodeURIComponent(query);
       const res = await fetch(
-        `https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=${encoded}&benchmark=Public_AR_Current&format=json`,
+        `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&countrycodes=us&limit=5&addressdetails=1`,
+        { headers: { 'User-Agent': 'HazardPrep/1.0' } },
       );
       const data = await res.json();
-      const matches = data?.result?.addressMatches || [];
 
       setSuggestions(
-        matches.slice(0, 5).map((m: any) => ({
-          address: m.matchedAddress,
-          city: m.addressComponents?.city || '',
-          state: m.addressComponents?.state || '',
+        data.slice(0, 5).map((item: any) => ({
+          address: item.display_name,
+          city: item.address?.city || item.address?.town || item.address?.village || '',
+          state: item.address?.state || '',
         })),
       );
-      setShowSuggestions(matches.length > 0);
+      setShowSuggestions(data.length > 0);
     } catch {
       setSuggestions([]);
     }
