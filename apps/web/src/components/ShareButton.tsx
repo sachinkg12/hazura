@@ -74,7 +74,7 @@ export function ShareButton({ address, score, level }: ShareButtonProps) {
     <div className="relative">
       <button
         onClick={() => setShowMenu(!showMenu)}
-        className="flex items-center gap-2 px-4 py-2 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-colors text-sm font-medium"
+        className="flex items-center gap-2 px-4 py-2 bg-white/20 border-2 border-white/40 rounded-xl hover:bg-white/30 transition-colors text-sm font-medium text-white"
         aria-label="Share this risk profile"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
