@@ -14,7 +14,7 @@
 - [x] Unit tests (8 passing)
 - [x] CI/CD GitHub Actions workflow
 - [x] Issue templates (bug, feature, data source request)
-- [x] README, CONTRIBUTING, LICENSE (MIT)
+- [x] README, CONTRIBUTING, LICENSE (Apache 2.0)
 
 ## Phase 2: Web Dashboard — COMPLETE
 - [x] Create Next.js app (`apps/web`)
@@ -27,7 +27,8 @@
 - [x] Mobile-responsive design (Tailwind CSS)
 
 ## Phase 3: Launch Readiness (P0 — do before going public)
-- [ ] Create GitHub repo and push code
+- [x] Create GitHub repo and push code — https://github.com/sachinkg12/MyHazardProfile
+- [x] Switch license to Apache 2.0 (patent grant, trademark protection)
 - [ ] Deploy to Vercel (live URL)
 - [x] Add error boundary (`error.tsx`) + custom not-found page
 - [ ] Add rate limiting on `/api/assess` route — federal APIs will throttle without it
