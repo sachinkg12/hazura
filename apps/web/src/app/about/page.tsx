@@ -46,6 +46,46 @@ const DATA_SOURCES = [
     method:
       'Composite of active fire count (up to 50 points) and total acreage burned (up to 50 points, logarithmic scale).',
   },
+  {
+    name: 'USDA Drought Monitor',
+    agency: 'USDA / NOAA / National Drought Mitigation Center',
+    url: 'https://droughtmonitor.unl.edu/',
+    description:
+      'Current drought conditions by county. Reports five severity levels from D0 (Abnormally Dry) to D4 (Exceptional Drought).',
+    coverage: 'All US counties, updated weekly',
+    method:
+      'Weighted score based on drought severity and area coverage: D0 = 10%, D1 = 25%, D2 = 50%, D3 = 75%, D4 = 100% of affected area percentage.',
+  },
+  {
+    name: 'NOAA Storm Events Database',
+    agency: 'NOAA National Centers for Environmental Information',
+    url: 'https://www.ncei.noaa.gov/access/monitoring/storm-events/',
+    description:
+      'Historical severe weather events over the past 20 years. Covers tornadoes, thunderstorms, hail, floods, hurricanes, ice storms, and heat events.',
+    coverage: 'All US counties, 2004–present',
+    method:
+      'Log-scale normalization of event count (up to 80 points) plus casualty bonus (up to 20 points) per hazard type.',
+  },
+  {
+    name: 'FEMA NFIP Claims',
+    agency: 'Federal Emergency Management Agency',
+    url: 'https://www.fema.gov/about/openfema/data-sets#nfip',
+    description:
+      'Historical National Flood Insurance Program claims by county. Tracks flood insurance payouts over decades.',
+    coverage: 'All US counties with NFIP policies',
+    method:
+      'Composite of total claims count (0–60 points, log scale), total payout amount (0–20 points), and recent claim recency (0–20 points).',
+  },
+  {
+    name: 'NASA/USGS Landslide Catalog',
+    agency: 'NASA / United States Geological Survey',
+    url: 'https://landslides.nasa.gov/',
+    description:
+      'Global landslide events within 100km of the location. Includes event size, fatalities, and injuries.',
+    coverage: 'Global coverage, address-level precision',
+    method:
+      'Event count (0–50 points) plus size-weighted severity (0–30 points) plus casualty score (0–20 points), all log-scaled.',
+  },
 ];
 
 const WEIGHTS = [
