@@ -4,6 +4,7 @@ import type { HazardScore, HazardType } from '../models/hazard.js';
 import type { Location } from '../models/location.js';
 import type { ProviderError } from '../models/profile.js';
 import { HazardAggregator } from './aggregator.js';
+import { getRegionalWeights, getRegionName } from './weights.js';
 import { geocodeAddress } from '../geocoding/geocoder.js';
 import {
   FemaProvider,
@@ -16,15 +17,17 @@ import {
   LandslideProvider,
 } from '../providers/index.js';
 
-const ENGINE_VERSION = '0.1.0';
+const ENGINE_VERSION = '0.2.0';
 
 export interface ScorerOptions {
   /** Custom providers. If not specified, all default providers are used. */
   providers?: DataProvider[];
-  /** Custom weights for composite scoring */
+  /** Custom weights for composite scoring. Overrides regional auto-detection. */
   weights?: Partial<Record<HazardType, number>>;
   /** Skip geocoding if location already has coordinates */
   skipGeocoding?: boolean;
+  /** Disable region-aware weights (use flat defaults instead) */
+  disableRegionalWeights?: boolean;
 }
 
 /**
@@ -40,7 +43,8 @@ export interface ScorerOptions {
  */
 export class HazardScorer {
   private providers: DataProvider[];
-  private aggregator: HazardAggregator;
+  private customWeights?: Partial<Record<HazardType, number>>;
+  private disableRegionalWeights: boolean;
 
   constructor(options: ScorerOptions = {}) {
     this.providers = options.providers ?? [
@@ -53,12 +57,14 @@ export class HazardScorer {
       new NfipProvider(),
       new LandslideProvider(),
     ];
-    this.aggregator = new HazardAggregator(options.weights);
+    this.customWeights = options.weights;
+    this.disableRegionalWeights = options.disableRegionalWeights ?? false;
   }
 
   /**
    * Assess hazard risk for a US address or location.
    * Runs all providers in parallel and aggregates results.
+   * Automatically applies region-aware weights based on the state.
    */
   async assess(addressOrLocation: string | Location): Promise<HazardProfile> {
     // Resolve location
@@ -66,6 +72,12 @@ export class HazardScorer {
       typeof addressOrLocation === 'string'
         ? await geocodeAddress(addressOrLocation)
         : addressOrLocation;
+
+    // Determine weights: custom > regional > default
+    const weights = this.customWeights
+      ?? (this.disableRegionalWeights ? undefined : getRegionalWeights(location.state));
+
+    const aggregator = new HazardAggregator(weights);
 
     // Run all providers in parallel
     const results = await Promise.allSettled(
@@ -92,13 +104,15 @@ export class HazardScorer {
     }
 
     // Aggregate scores
-    const { overallScore, overallLevel, topRisks, recommendations } =
-      this.aggregator.aggregate(allScores);
+    const { overallScore, overallLevel, overallPercentile, overallPercentileContext, topRisks, recommendations } =
+      aggregator.aggregate(allScores);
 
     return {
       location,
       overallScore,
       overallLevel,
+      overallPercentile,
+      overallPercentileContext,
       hazards: allScores,
       topRisks,
       recommendations,
@@ -107,6 +121,7 @@ export class HazardScorer {
         engineVersion: ENGINE_VERSION,
         providersUsed,
         providerErrors,
+        region: getRegionName(location.state) ?? undefined,
       },
     };
   }

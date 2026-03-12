@@ -5,6 +5,8 @@ interface HazardScore {
   score: number;
   level: string;
   description: string;
+  percentile?: number;
+  percentileContext?: string;
   source: { name: string; url: string };
 }
 
@@ -96,6 +98,9 @@ export function HazardCard({ hazard }: { hazard: HazardScore }) {
       </div>
 
       <p className="text-sm text-gray-600">{hazard.description}</p>
+      {hazard.percentileContext && (
+        <p className="text-xs text-gray-400 mt-2 italic">{hazard.percentileContext}</p>
+      )}
     </article>
   );
 }

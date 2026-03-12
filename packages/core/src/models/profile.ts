@@ -6,6 +6,9 @@ export interface HazardProfile {
   /** Composite risk score 0-100 */
   overallScore: number;
   overallLevel: RiskLevel;
+  /** National percentile for the composite score */
+  overallPercentile?: number;
+  overallPercentileContext?: string;
   /** Individual hazard assessments */
   hazards: HazardScore[];
   /** Top risks sorted by score descending */
@@ -18,6 +21,8 @@ export interface HazardProfile {
     engineVersion: string;
     providersUsed: string[];
     providerErrors: ProviderError[];
+    /** Region used for weight adjustment (e.g., "Pacific / West Coast") */
+    region?: string;
   };
 }
 

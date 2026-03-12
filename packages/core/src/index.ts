@@ -1,6 +1,8 @@
 // Engine
 export { HazardScorer, type ScorerOptions } from './engine/scorer.js';
 export { HazardAggregator } from './engine/aggregator.js';
+export { getRegionalWeights, getRegionName, DEFAULT_WEIGHTS } from './engine/weights.js';
+export { getScorePercentile, getPercentileContext } from './engine/percentiles.js';
 
 // Models
 export {

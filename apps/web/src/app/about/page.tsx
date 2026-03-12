@@ -219,6 +219,18 @@ export default function AboutPage() {
             Weights are automatically re-normalized when not all hazard types are present
             for a given location.
           </p>
+
+          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <h4 className="font-semibold text-sm text-blue-800 mb-2">Region-Aware Weights</h4>
+            <p className="text-sm text-blue-700">
+              Hazura automatically adjusts weights based on your state&apos;s region.
+              For example, earthquake weight increases to 25% on the Pacific Coast,
+              while hurricane weight increases to 25% on the Gulf Coast. This ensures
+              the composite score reflects regionally relevant risks rather than
+              applying a one-size-fits-all model. Regions: Pacific, Gulf Coast, Atlantic,
+              Tornado Alley, Mountain West, Upper Midwest, Alaska, Hawaii.
+            </p>
+          </div>
         </section>
 
         {/* Risk Levels */}

@@ -19,11 +19,15 @@ interface HazardProfile {
   };
   overallScore: number;
   overallLevel: string;
+  overallPercentile?: number;
+  overallPercentileContext?: string;
   hazards: Array<{
     type: string;
     score: number;
     level: string;
     description: string;
+    percentile?: number;
+    percentileContext?: string;
     source: { name: string; url: string };
   }>;
   topRisks: Array<{
@@ -31,6 +35,8 @@ interface HazardProfile {
     score: number;
     level: string;
     description: string;
+    percentile?: number;
+    percentileContext?: string;
     source: { name: string; url: string };
   }>;
   recommendations: Array<{
@@ -45,6 +51,7 @@ interface HazardProfile {
     engineVersion: string;
     providersUsed: string[];
     providerErrors: Array<{ providerId: string; error: string }>;
+    region?: string;
   };
 }
 
@@ -166,6 +173,11 @@ function ProfileContent() {
               {location.county && location.state && (
                 <p className="text-white/70 text-sm mt-1">
                   {location.county} County, {location.state}
+                  {meta.region && (
+                    <span className="ml-2 px-2 py-0.5 bg-white/20 rounded-full text-xs">
+                      {meta.region}
+                    </span>
+                  )}
                 </p>
               )}
             </div>
@@ -173,6 +185,9 @@ function ProfileContent() {
             <div className="relative flex flex-col items-center">
               <RiskGauge score={overallScore} level={overallLevel} size="lg" />
               <p className="text-white/80 text-sm mt-2">Composite Risk Score</p>
+              {profile.overallPercentileContext && (
+                <p className="text-white/70 text-xs mt-1">{profile.overallPercentileContext}</p>
+              )}
             </div>
           </div>
         </div>

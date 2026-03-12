@@ -67,7 +67,7 @@ describe('HazardScorer', () => {
     const scorer = new HazardScorer({ providers: [] });
     const profile = await scorer.assess(mockLocation);
 
-    expect(profile.meta.engineVersion).toBe('0.1.0');
+    expect(profile.meta.engineVersion).toBe('0.2.0');
     expect(profile.meta.assessedAt).toBeTruthy();
   });
 });

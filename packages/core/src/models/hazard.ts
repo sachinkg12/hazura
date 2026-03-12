@@ -19,6 +19,10 @@ export interface HazardScore {
   level: RiskLevel;
   /** Human-readable explanation */
   description: string;
+  /** National percentile (0-100): "higher than X% of US locations" */
+  percentile?: number;
+  /** Human-readable percentile context */
+  percentileContext?: string;
   /** Raw data from the provider for transparency */
   rawData?: Record<string, unknown>;
   /** Data source attribution */

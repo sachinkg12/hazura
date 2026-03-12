@@ -2,10 +2,13 @@ import type { HazardScore, HazardType, RiskLevel } from '../models/hazard.js';
 import { scoreToLevel } from '../models/hazard.js';
 import type { Recommendation } from '../models/profile.js';
 import { normalizeWeights, DEFAULT_WEIGHTS } from './weights.js';
+import { getScorePercentile, getPercentileContext } from './percentiles.js';
 
 export interface AggregateResult {
   overallScore: number;
   overallLevel: RiskLevel;
+  overallPercentile: number;
+  overallPercentileContext: string;
   topRisks: HazardScore[];
   recommendations: Recommendation[];
 }
@@ -93,6 +96,8 @@ export class HazardAggregator {
       return {
         overallScore: 0,
         overallLevel: 'very_low',
+        overallPercentile: 0,
+        overallPercentileContext: 'Lower risk than 100% of US locations',
         topRisks: [],
         recommendations: [],
       };
@@ -119,6 +124,12 @@ export class HazardAggregator {
     }
     overallScore = Math.round(overallScore);
 
+    // Enrich each score with percentile context
+    for (const score of uniqueScores) {
+      score.percentile = getScorePercentile(score.score, score.type);
+      score.percentileContext = getPercentileContext(score.score, score.type);
+    }
+
     // Sort by score descending for top risks
     const topRisks = [...uniqueScores].sort((a, b) => b.score - a.score);
 
@@ -142,6 +153,8 @@ export class HazardAggregator {
     return {
       overallScore,
       overallLevel: scoreToLevel(overallScore),
+      overallPercentile: getScorePercentile(overallScore),
+      overallPercentileContext: getPercentileContext(overallScore),
       topRisks,
       recommendations,
     };
