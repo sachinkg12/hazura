@@ -19,6 +19,10 @@ export { FemaProvider } from './providers/fema.provider.js';
 export { EarthquakeProvider } from './providers/earthquake.provider.js';
 export { WeatherProvider } from './providers/weather.provider.js';
 export { WildfireProvider } from './providers/wildfire.provider.js';
+export { DroughtProvider } from './providers/drought.provider.js';
+export { StormEventsProvider } from './providers/storm-events.provider.js';
+export { NfipProvider } from './providers/nfip.provider.js';
+export { LandslideProvider } from './providers/landslide.provider.js';
 
 // Geocoding
 export { geocodeAddress } from './geocoding/geocoder.js';

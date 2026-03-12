@@ -10,6 +10,10 @@ import {
   EarthquakeProvider,
   WeatherProvider,
   WildfireProvider,
+  DroughtProvider,
+  StormEventsProvider,
+  NfipProvider,
+  LandslideProvider,
 } from '../providers/index.js';
 
 const ENGINE_VERSION = '0.1.0';
@@ -44,6 +48,10 @@ export class HazardScorer {
       new EarthquakeProvider(),
       new WeatherProvider(),
       new WildfireProvider(),
+      new DroughtProvider(),
+      new StormEventsProvider(),
+      new NfipProvider(),
+      new LandslideProvider(),
     ];
     this.aggregator = new HazardAggregator(options.weights);
   }

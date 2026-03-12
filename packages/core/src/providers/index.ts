@@ -3,3 +3,7 @@ export { FemaProvider } from './fema.provider.js';
 export { EarthquakeProvider } from './earthquake.provider.js';
 export { WeatherProvider } from './weather.provider.js';
 export { WildfireProvider } from './wildfire.provider.js';
+export { DroughtProvider } from './drought.provider.js';
+export { StormEventsProvider } from './storm-events.provider.js';
+export { NfipProvider } from './nfip.provider.js';
+export { LandslideProvider } from './landslide.provider.js';
