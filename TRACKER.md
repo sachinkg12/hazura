@@ -69,15 +69,15 @@
 - [x] Loading animation with data source indicator (instead of plain spinner)
 - [x] Historical trend view (FEMA disaster declarations by 5-year period with stacked bar chart)
 
-## Phase 7: Depth & Data (P4 — richer scoring) — PARTIAL
+## Phase 7: Depth & Data (P4 — richer scoring) — COMPLETE
 - [x] USDA Drought Monitor provider
 - [x] NOAA historical severe storm provider (Storm Events Database)
 - [x] FEMA National Flood Insurance Program (NFIP) claims data
 - [x] USGS/NASA landslide catalog provider
-- [ ] Nearest emergency shelter lookup (FEMA shelters API)
-- [ ] Insurance gap detection ("you're in a flood zone but may not have flood insurance")
-- [ ] Integration tests (core engine with mocked HTTP)
-- [ ] E2E tests (Playwright for web dashboard)
+- [x] Nearest emergency shelter lookup (FEMA National Shelter System via ArcGIS)
+- [x] Insurance gap detection (flood, earthquake, wildfire, hurricane coverage gaps)
+- [x] Integration tests (6 tests, core engine with mocked HTTP)
+- [x] E2E tests (15 Playwright tests for web dashboard)
 
 ## Phase 8: EB-1A Traction (P5 — evidence gathering)
 - [ ] Present at Code for America / SF Civic Tech meetup
