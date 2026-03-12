@@ -7,3 +7,4 @@ export { DroughtProvider } from './drought.provider.js';
 export { StormEventsProvider } from './storm-events.provider.js';
 export { NfipProvider } from './nfip.provider.js';
 export { LandslideProvider } from './landslide.provider.js';
+export { ShelterProvider, type NearestShelter } from './shelter.provider.js';

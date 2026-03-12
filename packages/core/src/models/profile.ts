@@ -1,5 +1,7 @@
 import type { HazardScore, RiskLevel } from './hazard.js';
 import type { Location } from './location.js';
+import type { InsuranceGap } from '../engine/insurance-gap.js';
+import type { NearestShelter } from '../providers/shelter.provider.js';
 
 export interface HazardProfile {
   location: Location;
@@ -15,6 +17,10 @@ export interface HazardProfile {
   topRisks: HazardScore[];
   /** Personalized preparation recommendations */
   recommendations: Recommendation[];
+  /** Detected insurance coverage gaps */
+  insuranceGaps: InsuranceGap[];
+  /** Nearest emergency shelters */
+  nearestShelters: NearestShelter[];
   /** Assessment metadata */
   meta: {
     assessedAt: string;

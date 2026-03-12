@@ -15,7 +15,9 @@ import {
   StormEventsProvider,
   NfipProvider,
   LandslideProvider,
+  ShelterProvider,
 } from '../providers/index.js';
+import { detectInsuranceGaps, type InsuranceGap } from './insurance-gap.js';
 
 const ENGINE_VERSION = '0.2.0';
 
@@ -56,6 +58,7 @@ export class HazardScorer {
       new StormEventsProvider(),
       new NfipProvider(),
       new LandslideProvider(),
+      new ShelterProvider(),
     ];
     this.customWeights = options.weights;
     this.disableRegionalWeights = options.disableRegionalWeights ?? false;
@@ -107,6 +110,13 @@ export class HazardScorer {
     const { overallScore, overallLevel, overallPercentile, overallPercentileContext, topRisks, recommendations } =
       aggregator.aggregate(allScores);
 
+    // Detect insurance coverage gaps
+    const insuranceGaps = detectInsuranceGaps(allScores);
+
+    // Extract nearest shelters from shelter provider raw data
+    const shelterScore = allScores.find(s => s.source.name === 'FEMA National Shelter System');
+    const nearestShelters = (shelterScore?.rawData?.shelters as import('../providers/shelter.provider.js').NearestShelter[] | undefined) ?? [];
+
     return {
       location,
       overallScore,
@@ -116,6 +126,8 @@ export class HazardScorer {
       hazards: allScores,
       topRisks,
       recommendations,
+      insuranceGaps,
+      nearestShelters,
       meta: {
         assessedAt: new Date().toISOString(),
         engineVersion: ENGINE_VERSION,

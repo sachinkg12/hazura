@@ -46,6 +46,25 @@ interface HazardProfile {
     description: string;
     actionItems: string[];
   }>;
+  insuranceGaps?: Array<{
+    hazardType: string;
+    riskLevel: string;
+    riskScore: number;
+    gapType: string;
+    title: string;
+    description: string;
+    recommendation: string;
+    urgency: 'critical' | 'high' | 'medium';
+  }>;
+  nearestShelters?: Array<{
+    name: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    capacity: number;
+    distanceKm: number;
+  }>;
   meta: {
     assessedAt: string;
     engineVersion: string;
@@ -236,6 +255,80 @@ function ProfileContent() {
         <section>
           <Recommendations items={recommendations} />
         </section>
+
+        {/* Insurance Gaps */}
+        {profile.insuranceGaps && profile.insuranceGaps.length > 0 && (
+          <section>
+            <h2 className="text-2xl font-bold mb-2">Insurance Coverage Gaps</h2>
+            <p className="text-gray-500 mb-4">
+              Potential gaps in standard homeowner insurance for your risk profile.
+            </p>
+            <div className="space-y-4">
+              {profile.insuranceGaps.map((gap, i) => {
+                const urgencyColors = {
+                  critical: 'border-red-300 bg-red-50',
+                  high: 'border-orange-300 bg-orange-50',
+                  medium: 'border-yellow-300 bg-yellow-50',
+                };
+                const urgencyBadge = {
+                  critical: 'bg-red-100 text-red-700',
+                  high: 'bg-orange-100 text-orange-700',
+                  medium: 'bg-yellow-100 text-yellow-700',
+                };
+                return (
+                  <div key={i} className={`rounded-xl border-2 p-5 ${urgencyColors[gap.urgency]}`}>
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="font-semibold text-lg">{gap.title}</h3>
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${urgencyBadge[gap.urgency]}`}>
+                        {gap.urgency}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-700 mb-3">{gap.description}</p>
+                    <div className="bg-white/60 rounded-lg p-3">
+                      <p className="text-sm font-medium text-gray-800">{gap.recommendation}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* Nearest Shelters */}
+        {profile.nearestShelters && profile.nearestShelters.length > 0 && (
+          <section>
+            <h2 className="text-2xl font-bold mb-2">Nearest Emergency Shelters</h2>
+            <p className="text-gray-500 mb-4">
+              FEMA-registered shelters closest to your location.
+            </p>
+            <div className="bg-white rounded-xl border overflow-hidden">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b bg-gray-50">
+                    <th className="text-left px-4 py-3 font-semibold">Shelter</th>
+                    <th className="text-left px-4 py-3 font-semibold hidden md:table-cell">Location</th>
+                    <th className="text-right px-4 py-3 font-semibold">Distance</th>
+                    <th className="text-right px-4 py-3 font-semibold hidden sm:table-cell">Capacity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {profile.nearestShelters.slice(0, 5).map((shelter, i) => (
+                    <tr key={i} className="border-b last:border-0">
+                      <td className="px-4 py-3 font-medium">{shelter.name}</td>
+                      <td className="px-4 py-3 text-gray-500 hidden md:table-cell">
+                        {shelter.city}, {shelter.state} {shelter.zip}
+                      </td>
+                      <td className="px-4 py-3 text-right">{shelter.distanceKm} km</td>
+                      <td className="px-4 py-3 text-right hidden sm:table-cell">
+                        {shelter.capacity > 0 ? shelter.capacity.toLocaleString() : '—'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        )}
 
         {/* Meta info */}
         <section className="border-t pt-8">
