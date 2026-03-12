@@ -13,10 +13,22 @@
     "flood",
     "disaster",
     "preparedness",
-    "geospatial"
+    "geospatial",
+    "emergency",
+    "natural-disaster",
+    "risk-assessment"
   ],
   "license": "Apache-2.0",
-  "author": "HazardPrep Contributors",
+  "author": "Sachin Gupta <sachinkg12@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sachinkg12/hazardprep.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/sachinkg12/hazardprep#readme",
+  "bugs": {
+    "url": "https://github.com/sachinkg12/hazardprep/issues"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -28,16 +40,22 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "prepublishOnly": "pnpm run build && pnpm run test"
   },
   "devDependencies": {
     "tsup": "^8.0.0",
