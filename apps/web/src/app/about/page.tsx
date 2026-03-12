@@ -255,7 +255,7 @@ export default function AboutPage() {
 
       <footer className="border-t py-6 px-4 text-center text-sm text-gray-400">
         <p>
-          MyHazardProfile &middot; Open source &middot; MIT License
+          MyHazardProfile &middot; Open source &middot; Apache 2.0
         </p>
       </footer>
     </main>

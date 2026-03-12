@@ -68,4 +68,4 @@ const scorer = new HazardScorer({ providers: [new MyCustomProvider()] });
 
 ## License
 
-MIT
+Apache 2.0

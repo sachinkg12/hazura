@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/sachinkg12/MyHazardProfile/actions/workflows/ci.yml/badge.svg)](https://github.com/sachinkg12/MyHazardProfile/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@myhazardprofile/core)](https://www.npmjs.com/package/@myhazardprofile/core)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
 **Know your risk. Be prepared.**
 
@@ -103,4 +103,4 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+Apache 2.0 — see [LICENSE](LICENSE)

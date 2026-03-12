@@ -15,7 +15,7 @@
     "preparedness",
     "geospatial"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "MyHazardProfile Contributors",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

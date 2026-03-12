@@ -150,7 +150,7 @@ export default function HomePage() {
           <a href="https://github.com/sachinkg12/MyHazardProfile" className="underline hover:text-gray-600">
             GitHub
           </a>{' '}
-          &middot; MIT License
+          &middot; Apache 2.0
         </p>
       </footer>
     </main>
