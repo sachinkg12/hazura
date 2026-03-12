@@ -8,6 +8,7 @@ import { HazardMap } from '@/components/HazardMap';
 import { Recommendations } from '@/components/Recommendations';
 import { ShareButton } from '@/components/ShareButton';
 import { ExportButtons } from '@/components/ExportButtons';
+import { HistoricalTrends } from '@/components/HistoricalTrends';
 
 interface HazardProfile {
   location: {
@@ -208,6 +209,12 @@ function ProfileContent() {
               No significant hazard risks detected for this location.
             </div>
           )}
+        </section>
+
+        {/* Historical Trends */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Historical Trend</h2>
+          <HistoricalTrends address={location.address} />
         </section>
 
         {/* Recommendations */}
