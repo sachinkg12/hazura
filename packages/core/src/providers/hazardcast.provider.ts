@@ -42,9 +42,12 @@ export class HazardCastProvider extends BaseProvider {
 
   private baseUrl: string;
 
-  constructor(baseUrl = 'http://localhost:8080') {
+  constructor(baseUrl?: string) {
     super();
-    this.baseUrl = baseUrl;
+    // Allow override via env var for deployment flexibility
+    let envUrl: string | undefined;
+    try { envUrl = (globalThis as any).process?.env?.HAZARDCAST_API_URL; } catch { /* browser */ }
+    this.baseUrl = baseUrl || envUrl || 'https://hazardcast-production.up.railway.app';
   }
 
   protected async assess(location: Location): Promise<HazardScore[]> {
