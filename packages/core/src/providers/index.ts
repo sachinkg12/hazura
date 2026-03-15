@@ -8,3 +8,4 @@ export { StormEventsProvider } from './storm-events.provider.js';
 export { NfipProvider } from './nfip.provider.js';
 export { LandslideProvider } from './landslide.provider.js';
 export { ShelterProvider, type NearestShelter } from './shelter.provider.js';
+export { HazardCastProvider } from './hazardcast.provider.js';

@@ -16,6 +16,7 @@ import {
   NfipProvider,
   LandslideProvider,
   ShelterProvider,
+  HazardCastProvider,
 } from '../providers/index.js';
 import { detectInsuranceGaps, type InsuranceGap } from './insurance-gap.js';
 
@@ -59,6 +60,7 @@ export class HazardScorer {
       new NfipProvider(),
       new LandslideProvider(),
       new ShelterProvider(),
+      new HazardCastProvider(),
     ];
     this.customWeights = options.weights;
     this.disableRegionalWeights = options.disableRegionalWeights ?? false;

@@ -26,6 +26,7 @@ export { StormEventsProvider } from './providers/storm-events.provider.js';
 export { NfipProvider } from './providers/nfip.provider.js';
 export { LandslideProvider } from './providers/landslide.provider.js';
 export { ShelterProvider, type NearestShelter } from './providers/shelter.provider.js';
+export { HazardCastProvider } from './providers/hazardcast.provider.js';
 
 // Insurance Gap Detection
 export { detectInsuranceGaps, type InsuranceGap } from './engine/insurance-gap.js';

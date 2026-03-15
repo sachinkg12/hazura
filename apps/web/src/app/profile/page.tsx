@@ -9,6 +9,7 @@ import { Recommendations } from '@/components/Recommendations';
 import { ShareButton } from '@/components/ShareButton';
 import { ExportButtons } from '@/components/ExportButtons';
 import { HistoricalTrends } from '@/components/HistoricalTrends';
+import { AIPredictionCard } from '@/components/AIPredictionCard';
 
 interface HazardProfile {
   location: {
@@ -28,7 +29,8 @@ interface HazardProfile {
     description: string;
     percentile?: number;
     percentileContext?: string;
-    source: { name: string; url: string };
+    rawData?: Record<string, unknown>;
+    source: { name: string; url: string; lastUpdated?: string };
   }>;
   topRisks: Array<{
     type: string;
@@ -37,7 +39,8 @@ interface HazardProfile {
     description: string;
     percentile?: number;
     percentileContext?: string;
-    source: { name: string; url: string };
+    rawData?: Record<string, unknown>;
+    source: { name: string; url: string; lastUpdated?: string };
   }>;
   recommendations: Array<{
     priority: string;
@@ -166,6 +169,10 @@ function ProfileContent() {
 
   const { location, overallScore, overallLevel, topRisks, recommendations, meta } = profile;
 
+  // Extract AI prediction from HazardCast provider (if available)
+  const aiPrediction = profile.hazards.find(h => h.source.name === 'HazardCast ML');
+  const nonAiRisks = topRisks.filter(h => h.source.name !== 'HazardCast ML');
+
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Header with overall score */}
@@ -225,6 +232,17 @@ function ProfileContent() {
           />
         </section>
 
+        {/* AI Prediction */}
+        {aiPrediction && (
+          <section>
+            <h2 className="text-2xl font-bold mb-2">AI Risk Prediction</h2>
+            <p className="text-gray-500 mb-4">
+              Machine learning prediction from HazardCast — trained on 966K county-month observations with multi-hazard cascade analysis.
+            </p>
+            <AIPredictionCard hazard={aiPrediction} />
+          </section>
+        )}
+
         {/* Hazard breakdown */}
         <section>
           <h2 className="text-2xl font-bold mb-2">Hazard Breakdown</h2>
@@ -232,9 +250,9 @@ function ProfileContent() {
             Individual risk scores from {meta.providersUsed.length} federal data sources.
           </p>
 
-          {topRisks.length > 0 ? (
+          {nonAiRisks.length > 0 ? (
             <div className="grid md:grid-cols-2 gap-4">
-              {topRisks.map((hazard, i) => (
+              {nonAiRisks.map((hazard, i) => (
                 <HazardCard key={i} hazard={hazard} />
               ))}
             </div>
